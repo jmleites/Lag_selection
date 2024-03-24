@@ -3,22 +3,23 @@ from neuralforecast import NeuralForecast
 from statsforecast.models import SeasonalNaive, WindowAverage
 from statsforecast import StatsForecast
 from neuralforecast.losses.pytorch import SMAPE
+
 def initialize_models(data_name, freq_int, freq_str, input_list, models, horizon, df):
     stats_models = [
         SeasonalNaive(season_length=freq_int),
         WindowAverage(window_size=freq_int),
     ]
 
-    if data_name == 'M3':
+    if data_name == 'M4':
         sf = StatsForecast(
             models=stats_models,
-            freq=freq_str,
+            freq=1,
             n_jobs=1,
         )
     else:
         sf = StatsForecast(
             models=stats_models,
-            freq=1,
+            freq=freq_str,
             n_jobs=1,
         )
 
