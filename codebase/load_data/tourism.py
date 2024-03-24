@@ -7,7 +7,7 @@ from codebase.load_data.base import LoadDataset
 
 
 class TourismDataset(LoadDataset):
-    DATASET_PATH = 'assets/datasets/tourism/'
+    DATASET_PATH = os.path.abspath('../../assets/datasets/tourism/')
     DATASET_NAME = 'T'
 
     horizons = [4, 8, 24]
