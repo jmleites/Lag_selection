@@ -9,15 +9,15 @@ from codebase.load_data.config import DATASETS
 input_list = [1,2,3, 6, 12, 18, 24, 36, 48, 60, 90, 120]
 
 while True:
-    dataset_choice = input("Choose dataset (M3 or M4) or 'exit' to quit: ").strip().lower()
+    dataset_choice = input("Choose dataset (M3/M4/Tourism) or 'exit' to quit: ").strip().lower()
     if dataset_choice == 'exit':
         break
-    if dataset_choice not in ['m3', 'm4']:
-        print("Invalid choice. Please choose 'M3' or 'M4'.")
+    if dataset_choice not in ['m3', 'm4', 'tourism']:
+        print("Invalid choice. Please choose a valid dataset.")
         continue
 
     models = []
-    data_name = dataset_choice.upper()
+    data_name = dataset_choice.capitalize()
     group = 'Monthly'
     print("For dataset:", data_name)
     data_loader = DATASETS[data_name]
