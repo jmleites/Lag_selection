@@ -26,7 +26,7 @@ def initialize_models(data_name, freq_int, freq_str, input_list, models, horizon
         )
 
     nhits_config = {
-        'max_steps': 10,
+        'max_steps': 1000,
         'val_check_steps': 50,
         'enable_checkpointing': True,
         'start_padding_enabled': True,
