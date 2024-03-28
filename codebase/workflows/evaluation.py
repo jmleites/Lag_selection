@@ -5,6 +5,7 @@ def calculate_smape(cv_df, model):
     smape_model = smape(y=cv_df['y'], y_hat=cv_df[model])
     return smape_model
 
+
 def evaluation(evaluation_df, input_list):
     done = False
     best_input = []

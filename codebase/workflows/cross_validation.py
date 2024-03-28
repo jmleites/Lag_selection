@@ -14,4 +14,5 @@ def cross_validation(df, horizon, test_size, val_size, sf, nf, data_name, group)
         cv_df = cv_nf.merge(cv_sf.drop(columns=['y']), how='left', on=['unique_id', 'ds', 'cutoff'])
         cv_df['dataset'] = data_name
         cv_df.to_csv(cached_cv_results, index=False)
+
     return cv_df
