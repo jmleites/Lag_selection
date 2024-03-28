@@ -2,9 +2,9 @@ import os
 import pandas as pd
 
 
-def cross_validation(df, horizon, test_size, val_size, sf, nf, data_name, group):
+def cross_validation(df, horizon, test_size, val_size, sf, nf, data_name, group, results_name: str = 'all'):
     parent_directory = os.path.abspath(os.path.join(os.path.dirname(__file__), '..', '..', 'assets', 'results'))
-    cached_cv_results = os.path.join(parent_directory, f'{data_name}_{group}_results.csv')
+    cached_cv_results = os.path.join(parent_directory, f'{data_name}_{group}_{results_name}.csv')
     if os.path.exists(cached_cv_results):
         cv_df = pd.read_csv(cached_cv_results)
     else:

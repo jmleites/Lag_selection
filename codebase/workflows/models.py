@@ -1,8 +1,9 @@
-from neuralforecast.models import NHITS
 from neuralforecast import NeuralForecast
 from statsforecast.models import SeasonalNaive, WindowAverage
 from statsforecast import StatsForecast
 from neuralforecast.losses.pytorch import SMAPE
+
+from codebase.models.nhits import NamedNHITS
 
 
 def initialize_models(data_name, freq_int, freq_str, input_list, models, horizon, df):
@@ -25,7 +26,7 @@ def initialize_models(data_name, freq_int, freq_str, input_list, models, horizon
         )
 
     nhits_config = {
-        'max_steps': 1000,
+        'max_steps': 10,
         'val_check_steps': 50,
         'enable_checkpointing': True,
         'start_padding_enabled': True,
@@ -35,9 +36,9 @@ def initialize_models(data_name, freq_int, freq_str, input_list, models, horizon
     }
 
     for i in input_list:
-        models.append(NHITS(h=horizon,
-                            input_size=i,
-                            **nhits_config))
+        models.append(NamedNHITS(h=horizon,
+                                 input_size=i,
+                                 **nhits_config))
 
     nf = NeuralForecast(models=models, freq=freq_str)
 
