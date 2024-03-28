@@ -1,5 +1,14 @@
+import os
+
+from dotenv import load_dotenv
+
+load_dotenv('.env', verbose=True)
+
+DATASET_PATH_ = os.environ.get('DATASET_PATH')
+
+
 class LoadDataset:
-    DATASET_PATH = 'C:\\Users\\Utilizador\\Documents\\datasets'
+    DATASET_PATH = DATASET_PATH_
     DATASET_NAME = ''
 
     horizons = []
