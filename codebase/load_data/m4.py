@@ -2,19 +2,12 @@ from datasetsforecast.m4 import M4
 
 from codebase.load_data.base import LoadDataset
 
-# ds, *_ = M4.load('/Users/vcerqueira/Documents/datasets', group='Yearly')
-# ds, *_ = M4.load('/Users/vcerqueira/Documents/datasets', group='Quarterly')
-# ds, *_ = M4.load('/Users/vcerqueira/Documents/datasets', group='Monthly')
-# ds, *_ = M4.load('/Users/vcerqueira/Documents/datasets', group='Weekly')
-# ds, *_ = M4.load('/Users/vcerqueira/Documents/datasets', group='Daily')
-# ds, *_ = M4.load('/Users/vcerqueira/Documents/datasets', group='Hourly')
-
 
 class M4Dataset(LoadDataset):
     DATASET_NAME = 'M4'
 
     horizons = [6, 8, 18, 13, 14, 48]
-    frequency = [1, 4, 12,1,1,24]
+    frequency = [1, 4, 12, 1, 1, 24]
     horizons_map = {
         'Yearly': 6,
         'Quarterly': 8,
