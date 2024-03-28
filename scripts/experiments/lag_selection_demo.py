@@ -18,7 +18,6 @@ n_lags = data_loader.context_length.get(group)
 freq_str = data_loader.frequency_pd.get(group)
 freq_int = data_loader.frequency_map.get(group)
 
-
 series_example = df.query('unique_id=="M1"')['y']
 
 false_nearest_neighbors(series_example, tol=0)
@@ -26,6 +25,9 @@ false_nearest_neighbors(series_example, tol=0.1)
 
 pacf_estimation(series_example, tol=0)
 pacf_estimation(series_example, tol=0.1)
+
+
+
 
 horizon = 12
 models = [NHITS(h=horizon,
@@ -40,15 +42,6 @@ nf.predict(df=df)
 
 test_index = df['ds'].sort_values().unique()[-12:]
 train_df = df.loc[~df['ds'].isin(test_index), :]
-
-df_by_unq = df.groupby('unique_id')
-df_list = []
-for g, df_ in df_by_unq:
-    train_df_g = df_.sort_values('ds').head(-horizon)
-    if train_df_g.shape[0] > horizon * 4:
-        df_list.append(train_df_g)
-
-train_df = pd.concat(df_list).reset_index(drop=True)
 
 
 class ModelBasedLagSelection:
@@ -98,18 +91,7 @@ class ModelBasedLagSelection:
         results = {}
         for g, cv_ in cv_by_ts:
 
-
         pass
 
     def cross_validation(self):
         pass
-
-
-class DataBasedLagSelection:
-
-    @staticmethod
-    def bandara_heuristic(horizon, frequency):
-        n = max(horizon, frequency)
-        n_lags = int(np.ceil(1.25 * n))
-
-        return n_lags
