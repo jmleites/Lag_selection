@@ -8,6 +8,7 @@ __pycache__/
 .ipynb_checkpoints
 notebooks/.ipynb_checkpoints
 lightning_logs
+__pycache__/
 
 # C extensions
 *.so
