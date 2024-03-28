@@ -18,6 +18,7 @@ n_lags = data_loader.context_length.get(group)
 freq_str = data_loader.frequency_pd.get(group)
 freq_int = data_loader.frequency_map.get(group)
 
+
 series_example = df.query('unique_id=="M1"')['y']
 
 false_nearest_neighbors(series_example, tol=0)
