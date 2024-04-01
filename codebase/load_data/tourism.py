@@ -7,36 +7,29 @@ from codebase.load_data.base import LoadDataset
 
 
 class TourismDataset(LoadDataset):
-    DATASET_PATH = os.path.abspath('../../assets/datasets/tourism/')
+    DATASET_PATH = 'assets/datasets/tourism/'
+    # DATASET_PATH = os.path.abspath('../../assets/datasets/tourism/')
     DATASET_NAME = 'T'
 
-    horizons = [4, 8, 24]
-    frequency = [1, 4, 12]
     horizons_map = {
-        'Yearly': 4,
-        'Quarterly': 8,
-        'Monthly': 24
+        'Monthly': 18
     }
 
     frequency_map = {
-        'Yearly': 1,
-        'Quarterly': 4,
         'Monthly': 12
     }
 
     context_length = {
-        'Yearly': 1,
-        'Quarterly': 8,
-        'Monthly': 60
+        'Monthly': 24
     }
 
     frequency_pd = {
-        'Yearly': 'Y',
-        'Quarterly': 'QS',
         'Monthly': 'MS'
     }
 
     data_group = [*horizons_map]
+    horizons = [*horizons_map.values()]
+    frequency = [*frequency_map.values()]
 
     @classmethod
     def load_data(cls, group):
