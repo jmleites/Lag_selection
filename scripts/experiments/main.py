@@ -39,11 +39,28 @@ while True:
         list_models.append(model.__class__.__name__)
     for model in nf.models:
         list_models.append(repr(model))
+
+    model_counts = {}
+    list_models_num = list_models
+    for i, model in enumerate(list_models):
+        if model in model_counts:
+            model_counts[model] += 1
+            list_models_num[i] = f"{model}{model_counts[model]}"
+        else:
+            model_counts[model] = 0
+          
     for i, model in enumerate(list_models):
         smape_value = calculate_smape(cv_df, model)
         print("SMAPE for", model, ":", smape_value)
 
+    smape_graph(smape_list)
+
     evaluation_df = evaluate(cv_df.drop(columns=['cutoff', 'ds', 'dataset']), metrics=[rmse])
     evaluation_df['best_model'] = evaluation_df.drop(columns=['metric', 'unique_id']).idxmin(axis=1)
-    # evaluation_df = evaluation(evaluation_df, INPUT_RANGE)
+    evaluation_df = evaluation(evaluation_df, INPUT_RANGE)
     print(evaluation_df)
+
+    rmse_graph(evaluation_df, list_models_num)
+
+    best_model_counts = Counter(evaluation_df['best_model'])
+    best_model_graph(best_model_counts, list_models_num)
