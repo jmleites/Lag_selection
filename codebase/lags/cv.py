@@ -1,11 +1,8 @@
 import pandas as pd
 import numpy as np
 from neuralforecast.losses.numpy import smape
-from codebase.load_data.results import InnerCVReader
-from codebase.lags.information_criteria import aic, bic
 
-inner_cv = InnerCVReader.read_results()
-inner_cv = inner_cv.query('dataset=="M3"').reset_index(drop=True)
+from codebase.lags.information_criteria import aic, bic
 
 
 class LagSelectionFromCV:
