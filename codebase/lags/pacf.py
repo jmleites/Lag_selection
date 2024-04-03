@@ -4,7 +4,7 @@ from statsmodels.tsa import stattools
 from pmdarima.arima import ndiffs
 
 
-def pacf_estimation(series: pd.Series, tol=0.01, max_lags: int = 50):
+def pacf_estimation(series: pd.Series, tol=0.01, max_lags: int = 100):
     d_required = ndiffs(series)
 
     if d_required > 0:

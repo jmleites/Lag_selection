@@ -53,14 +53,14 @@ while True:
         smape_value = calculate_smape(cv_df, model)
         print("SMAPE for", model, ":", smape_value)
 
-    smape_graph(smape_list)
-
-    evaluation_df = evaluate(cv_df.drop(columns=['cutoff', 'ds', 'dataset']), metrics=[rmse])
-    evaluation_df['best_model'] = evaluation_df.drop(columns=['metric', 'unique_id']).idxmin(axis=1)
-    evaluation_df = evaluation(evaluation_df, INPUT_RANGE)
-    print(evaluation_df)
-
-    rmse_graph(evaluation_df, list_models_num)
-
-    best_model_counts = Counter(evaluation_df['best_model'])
-    best_model_graph(best_model_counts, list_models_num)
+    # smape_graph(smape_list)
+    #
+    # evaluation_df = evaluate(cv_df.drop(columns=['cutoff', 'ds', 'dataset']), metrics=[rmse])
+    # evaluation_df['best_model'] = evaluation_df.drop(columns=['metric', 'unique_id']).idxmin(axis=1)
+    # evaluation_df = evaluation(evaluation_df, INPUT_RANGE)
+    # print(evaluation_df)
+    #
+    # rmse_graph(evaluation_df, list_models_num)
+    #
+    # best_model_counts = Counter(evaluation_df['best_model'])
+    # best_model_graph(best_model_counts, list_models_num)

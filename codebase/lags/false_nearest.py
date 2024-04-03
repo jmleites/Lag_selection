@@ -7,10 +7,13 @@ from rpy2.robjects import pandas2ri
 
 def false_nearest_neighbors(series: pd.Series,
                             tol: float,
-                            max_lags: int = 50):
+                            max_lags: int = 100):
     pandas2ri.activate()
 
     series_fit = copy.deepcopy(series)
+
+    if max_lags > len(series)/2:
+        max_lags = int(len(series)/2 - 1)
 
     data_set = pandas2ri.py2rpy_pandasseries(series_fit)
 
