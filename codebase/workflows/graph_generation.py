@@ -1,6 +1,9 @@
+import os
 import matplotlib.pyplot as plt
+def smape_graph(smape_list, data_name, group, results_name: str = 'all'):
+    parent_directory = os.path.abspath(os.path.join(os.path.dirname(__file__), '..', '..', 'assets', 'logs'))
+    cached_logs = os.path.join(parent_directory, f'{data_name}_{group}_bars_{results_name}.pdf')
 
-def smape_graph(smape_list):
     models = [item[0] for item in smape_list]
     values = [item[1] for item in smape_list]
 
@@ -11,39 +14,24 @@ def smape_graph(smape_list):
     plt.ylabel('SMAPE')
     plt.xticks(rotation=45, ha='right')
     plt.tight_layout()
+    if not os.path.exists(cached_logs):
+        plt.savefig(cached_logs)
     plt.show()
 
-def rmse_graph(df, list_models):
-    df_sorted = df.sort_values(by='unique_id')
+def smape_boxplot(df, list_models, data_name, group, results_name: str = 'all'):
+    parent_directory = os.path.abspath(os.path.join(os.path.dirname(__file__), '..', '..', 'assets', 'logs'))
+    cached_logs = os.path.join(parent_directory, f'{data_name}_{group}_boxplot_{results_name}.pdf')
 
-    unique_ids = df_sorted['unique_id']
+    df_sorted = df.sort_values(by='unique_id')
     model_values = {model: df_sorted[model] for model in list_models}
 
-    plt.figure(figsize=(10, 6))
-    for model, values in model_values.items():
-        plt.plot(unique_ids, values, label=model)
-
-    plt.xlabel('unique_id')
-    plt.ylabel('RMSE')
-    plt.title('Trajectory of models values across unique_id')
-    plt.legend()
-    plt.grid(True)
-    plt.xticks(rotation=45)
-    plt.tight_layout()
-    plt.show()
-
-def best_model_graph(best_model_counts, list_models_num):
-    import matplotlib.pyplot as plt
-
-    models = [model for model in list_models_num if model in best_model_counts]
-    counts = [best_model_counts[model] for model in models]
-
-    # Plotting the bar graph
-    plt.figure(figsize=(10, 6))
-    plt.bar(models, counts, color='skyblue')
+    plt.figure(figsize=(10, 12))
+    plt.boxplot(model_values.values(), labels=model_values.keys())
     plt.xlabel('Model')
-    plt.ylabel('Count')
-    plt.title('Frequency of Best Models')
+    plt.ylabel('SMAPE')
+    plt.title('Boxplot of SMAPE values for each model')
     plt.xticks(rotation=45)
     plt.tight_layout()
+    if not os.path.exists(cached_logs):
+        plt.savefig(cached_logs)
     plt.show()
