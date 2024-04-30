@@ -1,5 +1,7 @@
 import os
 import matplotlib.pyplot as plt
+
+
 def smape_graph(smape_list, data_name, group, results_name: str = 'all'):
     parent_directory = os.path.abspath(os.path.join(os.path.dirname(__file__), '..', '..', 'assets', 'logs'))
     cached_logs = os.path.join(parent_directory, f'{data_name}_{group}_bars_{results_name}.pdf')
@@ -17,6 +19,7 @@ def smape_graph(smape_list, data_name, group, results_name: str = 'all'):
     if not os.path.exists(cached_logs):
         plt.savefig(cached_logs)
     plt.show()
+
 
 def smape_boxplot(df, list_models, data_name, group, results_name: str = 'all'):
     parent_directory = os.path.abspath(os.path.join(os.path.dirname(__file__), '..', '..', 'assets', 'logs'))

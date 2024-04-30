@@ -68,3 +68,4 @@ urllib3==2.2.1
 utilsforecast==0.0.27
 xlrd==2.0.1
 yarl==1.9.4
+gluonts==0.14.4
