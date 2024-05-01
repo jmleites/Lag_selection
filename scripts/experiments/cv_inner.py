@@ -7,7 +7,7 @@ from codebase.workflows.config import INPUT_RANGE
 EXPERIMENT = 'inner'
 
 while True:
-    dataset_choice = input("Choose dataset (M3/M4/Tourism) or 'exit' to quit: ").strip().lower()
+    dataset_choice = input("Choose dataset (M3/M4/Tourism/gluonts) or 'exit' to quit: ").strip().lower()
     if dataset_choice == 'exit':
         break
     if dataset_choice not in ['m3', 'm4', 'tourism', 'gluonts']:

@@ -76,12 +76,12 @@ class LagSelectionFromCV:
         bic_avg_min, bic_max_min = self.select_using_info('bic')
 
         vals = {
-            'cv_err': avg_err,
-            'cv_rank': avg_rank,
-            'aic_avg': aic_avg_min,
-            'aic_max': aic_max_min,
-            'bic_avg': bic_avg_min,
-            'bic_max': bic_max_min,
+            'CV': avg_err,
+            'Avg. Rank': avg_rank,
+            'AIC': aic_avg_min,
+            # 'aic_max': aic_max_min,
+            'BIC': bic_avg_min,
+            # 'bic_max': bic_max_min,
         }
 
         return vals
@@ -119,10 +119,10 @@ class LagSelectionFromData:
             pacf1 = pacf_estimation(s, tol=0.01)
 
             results_by_uid[uid] = {
-                'fnn0': fnn0,
-                'fnn1': fnn1,
-                'pacf0': pacf0,
-                'pacf1': pacf1,
+                'FNN': fnn0,
+                'FNN@0.01': fnn1,
+                'PACF': pacf0,
+                'PACF@0.01': pacf1,
             }
 
         results_df = pd.DataFrame(results_by_uid).T
@@ -135,13 +135,13 @@ class LagSelectionFromData:
         bandara = bandara_heuristic(self.horizon, self.frequency)
 
         vals = {
-            'bandara': bandara,
-            'horizon_1x': self.horizon,
-            'horizon_2x': self.horizon * 2,
-            'freq_1x': self.frequency,
-            'freq_2x': self.frequency * 2,
-            'freq_half': self.frequency / 2,
-            'bl_1': 1,
+            'Bandara': bandara,
+            'Horizon': self.horizon,
+            # 'horizon_2x': self.horizon * 2,
+            'Frequency': self.frequency,
+            '2*Frequency': self.frequency * 2,
+            # 'freq_half': self.frequency / 2,
+            'Previous': 1,
         }
 
         return vals
