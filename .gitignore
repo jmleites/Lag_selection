@@ -10,7 +10,6 @@ notebooks/.ipynb_checkpoints
 lightning_logs
 __pycache__/
 assets/old_codes_with_permutation
-assets/papers
 
 # C extensions
 *.so
