@@ -3,7 +3,7 @@ from neuralforecast.losses.numpy import smape, rmae
 
 from codebase.workflows.config import LAGS
 
-ds = 'Tourism'
+ds = 'Gluonts'
 results = pd.read_csv(f'assets/results/{ds}_outer.csv')
 
 lags = LAGS[ds]

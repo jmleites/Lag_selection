@@ -112,17 +112,22 @@ class LagSelectionFromData:
             # df_ = df.query('unique_id=="M1"')
             s = df_['y'].reset_index(drop=True)
 
-            fnn0 = false_nearest_neighbors(s, tol=0)
+            fnn0 = false_nearest_neighbors(s, tol=0.001)
             fnn1 = false_nearest_neighbors(s, tol=0.01)
+            fnn2 = false_nearest_neighbors(s, tol=0.1)
 
-            pacf0 = pacf_estimation(s, tol=0)
+            pacf0 = pacf_estimation(s, tol=0.001)
             pacf1 = pacf_estimation(s, tol=0.01)
+            pacf2 = pacf_estimation(s, tol=0.1)
 
             results_by_uid[uid] = {
-                'FNN': fnn0,
+                'FNN@0.001': fnn0,
                 'FNN@0.01': fnn1,
+                'FNN@0.1': fnn2,
                 'PACF': pacf0,
+                'PACF@0.001': pacf0,
                 'PACF@0.01': pacf1,
+                'PACF@0.1': pacf2,
             }
 
         results_df = pd.DataFrame(results_by_uid).T

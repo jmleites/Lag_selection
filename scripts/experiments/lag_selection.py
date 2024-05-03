@@ -7,7 +7,7 @@ from codebase.load_data.results import InnerCVReader
 
 inner_cv = InnerCVReader.read_results()
 
-data_name = 'Gluonts'
+data_name = 'Tourism'
 group = 'Monthly' if data_name != 'Gluonts' else 'm1_monthly'
 data_loader = DATASETS[data_name]
 
