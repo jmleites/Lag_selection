@@ -4,7 +4,7 @@ INPUT_RANGE = np.arange(1, 121).tolist()
 INPUT_SET = [1, 2, 3, 6, 12, 18, 24, 36, 48, 60, 90, 120]
 
 LAGS = {
-    'M3': {'2*Frequency': 24,
+    'M3': {'Frequency*2': 24,
            'AIC': 5,
            'Avg. Rank': 63,
            'BIC': 3,
@@ -14,11 +14,10 @@ LAGS = {
            'FNN@0.01': 5,
            'Frequency': 12,
            'Horizon': 18,
-           'PACF': 44,
            'PACF@0.001': 44,
            'PACF@0.01': 24,
            'Previous': 1},
-    'Tourism': {'2*Frequency': 24,
+    'Tourism': {'Frequency*2': 24,
                 'AIC': 10,
                 'Avg. Rank': 43,
                 'BIC': 8,
@@ -28,11 +27,10 @@ LAGS = {
                 'FNN@0.01': 6,
                 'Frequency': 12,
                 'Horizon': 18,
-                'PACF': 77,
                 'PACF@0.001': 77,
                 'PACF@0.01': 29,
                 'Previous': 1},
-    'Gluonts': {'2*Frequency': 24,
+    'Gluonts': {'Frequency*2': 24,
                 'AIC': 4,
                 'Avg. Rank': 58,
                 'BIC': 3,
@@ -42,7 +40,6 @@ LAGS = {
                 'FNN@0.01': 4,
                 'Frequency': 12,
                 'Horizon': 8,
-                'PACF': 29,
                 'PACF@0.001': 29,
                 'PACF@0.01': 19,
                 'Previous': 1}

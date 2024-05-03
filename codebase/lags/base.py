@@ -118,7 +118,7 @@ class LagSelectionFromData:
 
             pacf0 = pacf_estimation(s, tol=0.001)
             pacf1 = pacf_estimation(s, tol=0.01)
-            pacf2 = pacf_estimation(s, tol=0.1)
+            pacf2 = pacf_estimation(s, tol=0.05)
 
             results_by_uid[uid] = {
                 'FNN@0.001': fnn0,
