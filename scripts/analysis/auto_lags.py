@@ -1,73 +1,64 @@
 import pandas as pd
-from neuralforecast.losses.numpy import smape, rmae
+import plotnine as p9
+from neuralforecast.losses.numpy import smape
 
+from codebase.load_data.config import DATASETS_NAMES
 from codebase.workflows.config import LAGS
 
-ds = 'Tourism'
-results = pd.read_csv(f'assets/results/{ds}_outer.csv')
+print(DATASETS_NAMES)
 
-lags = LAGS[ds]
+BASE_THEME = p9.theme_538(base_family='Palatino', base_size=12) + \
+             p9.theme(plot_margin=.001,
+                      panel_background=p9.element_rect(fill='white'),
+                      plot_background=p9.element_rect(fill='white'),
+                      strip_background=p9.element_rect(fill='white'),
+                      legend_background=p9.element_rect(fill='white'),
+                      legend_title=p9.element_blank(),
+                      legend_position='none')
 
-predictions = {m: results[f'NHITS_{int(lag)}'] for m, lag in lags.items()}
-predictions = pd.DataFrame(predictions)
+# ds = 'Tourism'
 
-methods = predictions.columns.tolist() + ['SeasonalNaive']
+ds_perf, median_perf, es_perf = {}, {}, {}
+for ds in DATASETS_NAMES:
+    print(ds)
+    results = pd.read_csv(f'assets/results/{ds}_outer.csv')
 
-results_all = pd.concat([results, predictions], axis=1)
+    lags = LAGS[ds]
 
-cols_bool = results_all.columns.str.contains('NHITS')
-results_all = results_all.loc[:, ~cols_bool]
+    predictions = {m: results[f'NHITS_{int(lag)}'] for m, lag in lags.items()}
+    predictions = pd.DataFrame(predictions)
+    methods = predictions.columns.tolist()
 
-# overall error
+    predictions['unique_id'] = results['unique_id']
+    predictions['y'] = results['y']
 
-overall_sc = {}
-for k in methods:
-    overall_sc[k] = smape(y=results_all['y'], y_hat=results_all[k])
-    # overall_sc[k] = rmae(y=results_all['y'], y_hat1=results_all[k], y_hat2=results_all['SeasonalNaive'])
+    overall_perf = {}
+    for m in methods:
+        overall_perf[m] = smape(y=results['y'], y_hat=predictions[m])
 
-overall_sc = pd.Series(overall_sc)
-overall_sc.sort_values()
+    perf_s = pd.Series(overall_perf)
 
+    results_g = predictions.groupby('unique_id')
 
-# by series
+    scores = []
+    for g, df in results_g:
+        sc = {}
+        for m in methods:
+            sc[m] = smape(y=df['y'], y_hat=df[m])
 
-results_g = results_all.groupby('unique_id')
+        scores.append(pd.Series(sc))
 
-scores = []
-for g, df in results_g:
-    sc = {}
-    for k in methods:
-        sc[k] = smape(y=df['y'], y_hat=df[k])
-        # sc[k] = rmae(y=df['y'], y_hat1=df[k], y_hat2=df['SeasonalNaive'])
+    scores_df = pd.DataFrame(scores)
+    scores_df.index = [*results_g.groups]
 
-    scores.append(pd.Series(sc))
+    ds_perf[ds] = perf_s
+    median_perf[ds] = scores_df.median()
+    es_perf[ds] = scores_df.apply(lambda x: x[x > x.quantile(0.95)].mean())
 
-scores_df = pd.DataFrame(scores)
-scores_df.index = [*results_g.groups]
+df = pd.DataFrame(ds_perf).drop(['AIC', 'BIC']).round(4)
 
-scores_df.rank(axis=1).mean().sort_values()
+df['Average'] = df.mean(axis=1)
 
-scores_df.boxplot()
-scores_df.mean().sort_values()
-scores_df.median().sort_values()
-scores_df.apply(lambda x: x[x > x.quantile(0.95)].mean()).sort_values()
+df_str = df.round(4).sort_values('Average').astype(str)
 
-#
-
-
-results_g = results_all.groupby('unique_id')
-
-scores = []
-for g, df in results_g:
-
-    sc = {}
-    for k in methods:
-        sc[k] = smape(y=df['y'], y_hat=df[k])
-        # sc[k] = rmae(y=df['y'], y_hat1=df[k], y_hat2=df['SeasonalNaive'])
-
-    sc_regret = pd.Series(sc)
-
-    scores.append(sc_regret-sc_regret.min())
-
-scores_df = pd.DataFrame(scores)
-scores_df.index = [*results_g.groups]
+print(df_str.to_latex(caption='cap', label='tab:results'))
