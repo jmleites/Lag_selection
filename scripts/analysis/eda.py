@@ -35,6 +35,7 @@ for ds in DATASETS_NAMES:
     ds_perf[ds] = perf_s
 
 df = pd.DataFrame(ds_perf).reset_index().melt('index')
+df['variable'] = df['variable'].map({'Gluonts':'M1','M3':'M3','Tourism':'Tourism'})
 
 df_nhits = df.query('index!="SeasonalNaive"')
 df_sn = df.query('index=="SeasonalNaive"')
