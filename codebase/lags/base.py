@@ -134,7 +134,7 @@ class LagSelectionFromData:
 
         avg_val = np.ceil(results_df.mean()).astype(int).to_dict()
 
-        return avg_val
+        return avg_val, results_df
 
     def select_from_params(self):
         bandara = bandara_heuristic(self.horizon, self.frequency)

@@ -20,7 +20,7 @@ selection_cv = LagSelectionFromCV(inner_cv)
 selection_data = LagSelectionFromData(df=df, horizon=horizon, frequency=freq_int)
 
 cv_based = selection_cv.predict_lags()
-data_based = selection_data.select_by_uid()
+data_based, results_df = selection_data.select_by_uid()
 params_based = selection_data.select_from_params()
 
 selected_lags = {**cv_based, **data_based, **params_based}
